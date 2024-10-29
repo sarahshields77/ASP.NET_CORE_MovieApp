@@ -1,0 +1,63 @@
+﻿@using System.Security.Claims
+@{
+    ViewData["Title"] = "Details";
+}
+
+@model MovieDetailsViewModel
+
+<h2>@Model.Movie.Title</h2>
+<p><strong>Genre:</strong> @Model.Movie.Genre</p>
+<p><strong>Director:</strong> @Model.Movie.Director</p>
+<p><strong>Release Date:</strong> @Model.Movie.ReleaseDate.ToString("yyyy-MM-dd")</p>
+<p><strong>Average Rating:</strong> @Model.AverageRating.ToString("F2")</p>
+
+<a asp-action="Dashboard" asp-controller="Movie" class="btn btn-secondary">Back</a>
+
+<!-- only show Delete and Edit buttons if the logged-in user uploaded the movie -->
+@if (Model.Movie.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+{
+    <a asp-action="EditMovie" asp-route-id="@Model.Movie.MovieId" class="btn btn-info">Edit</a>
+
+    <form asp-action="DeleteMovie" asp-route-id="@Model.Movie.MovieId" method="post" style="display:inline;">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+}
+
+<!-- download button for all users -->
+<a asp-action="DownloadMovie" asp-route-id="@Model.Movie.MovieId" class="btn btn-success">Download</a>
+
+<h3>Comments</h3>
+@if (Model.Comments.Any())
+{
+    <ul>
+        @foreach (var comment in Model.Comments)
+        {
+            <li>
+                <strong>@comment.UserId</strong> @comment.CommentText
+                <span class="text-muted">(@comment.PostedAt.ToString("g"))</span>
+
+                @if (comment.Editable && comment.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    <a asp-action="EditComment" asp-route-id="@comment.CommentId" class="btn btn-info">Edit</a>
+                }
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No comments available for this movie.</p>
+}
+
+<h3>Add a Comment</h3>
+<form asp-action="AddComment" asp-controller="Movie" method="post">
+    <input type="hidden" name="movieId" value="@Model.Movie.MovieId" />
+    <div class="form-group">
+        <textarea name="commentText" class="form-control" placeholder="Write your comment..." required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="rating">Rating (1-10):</label>
+        <input type="number" name="rating" id="rating" class="form-control" min="1" max="10" required />
+    </div> 
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

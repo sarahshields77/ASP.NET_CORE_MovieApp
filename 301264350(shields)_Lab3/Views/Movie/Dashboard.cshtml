@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+@model IEnumerable<Movie>
+
+<h2>Movie Dashboard</h2>
+
+<div class="mb-3">
+    <a asp-controller="Movie" asp-action="AddMovie" class="btn btn-success">Add Movie</a>
+</div>
+
+<form asp-action="Dashboard" asp-controller="Movie" method="get" class="form-inline mb-3">
+    <div class="form-group mr-3">
+        <label for="genre" class="mr-2">Genre:</label>
+        <select name="genre" id="genre" class="form-control">
+            <option value="">All</option>
+            <option value="Action">Action</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Drama">Drama</option>
+            <option value="Science Fiction">Science Fiction</option>
+            <option value="Crime">Crime</option>
+        </select>
+    </div>
+    <div class="form-group mr-3">
+        <label for="rating" class="mr-2">Rating:</label>
+        <input type="number" name="rating" id="rating" class="form-control" min="1" max="10" placeholder="Min Rating">
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Rating</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td>@movie.Title</td>
+                <td>@movie.Genre</td>
+                <td>@movie.Rating.ToString("F2")</td>
+                <td>
+                    <a asp-action="Details" asp-controller="Movie" asp-route-id="@movie.MovieId" class="btn btn-primary">View</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

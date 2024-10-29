@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "User Registration and Login";
+}
+
+<h3>Welcome Back! Sign In Here:</h3>
+<form method="post" action="@Url.Action("Login", "User")">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+<h3>No Account? No Problem! Start Here:</h3>
+<a class="btn btn-secondary" href="@Url.Action("Register", "User")">Register</a>

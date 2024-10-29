@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Edit Comment";
+}
+
+@model Comment
+
+<h2>Edit Comment</h2>
+
+<form asp-action="EditComment" asp-controller="Movie" method="post">
+    <input type="hidden" name="CommentId" value="@Model.CommentId" />
+    <input type="hidden" name="MovieId" value="@Model.MovieId" />
+
+    <div class="form-group">
+        <label for="CommentText">Comment:</label>
+        <textarea id="CommentText" name="CommentText" class="form-control" required>@Model.CommentText</textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="Rating">Rating (1-10):</label>
+        <input type="number" id="Rating" name="Rating" class="form-control" min="1" max="10" value="@Model.Rating.ToString("F2")" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-action="Details" asp-route-id="@Model.MovieId" class="btn btn-secondary">Cancel</a>
+</form>
+
