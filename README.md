@@ -26,18 +26,4 @@ Nextflix is an ASP.NET Core web application designed to compete with streaming g
   - **AWS DynamoDB**: Stores movie metadata and comments.
   - **AWS S3**: Manages video storage and downloading.
 
-## Getting Started
 
-To set up the project locally, ensure you have the following installed:
-
-- [.NET SDK](https://dotnet.microsoft.com/download) (version 6 or later)
-- [AWS CLI](https://aws.amazon.com/cli/)
-- [MySQL Workbench](https://www.mysql.com/products/workbench/) or any SQL Client compatible with RDS
-
-### Setup Steps
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/username/Nextflix.git
-   cd Nextflix
